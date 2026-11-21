@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { BadgeCheck, ShieldCheck, Wallet } from "lucide-react";
+import { AuthGuard } from "@/components/auth/auth-guard";
 import { Logo } from "@/components/brand/logo";
 
 export function AuthShell({
@@ -22,7 +23,9 @@ export function AuthShell({
             {title}
           </h1>
           <p className="mt-2 text-sm text-ink-500">{subtitle}</p>
-          <div className="mt-8">{children}</div>
+          <div className="mt-8">
+            <AuthGuard>{children}</AuthGuard>
+          </div>
         </div>
       </div>
 
