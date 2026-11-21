@@ -37,10 +37,11 @@ export function Navbar() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
+  /** Closes both menus after the visitor navigates. */
+  function closeMenus() {
     setMenuOpen(false);
     setDropdownOpen(false);
-  }, [pathname]);
+  }
 
   useEffect(() => {
     function onClick(event: MouseEvent) {
@@ -111,12 +112,14 @@ export function Navbar() {
                   <div className="p-1.5">
                     <Link
                       href={dashboardFor(user.role)}
+                      onClick={closeMenus}
                       className="flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm font-medium text-ink-700 hover:bg-ink-50"
                     >
                       <LayoutDashboard className="size-4" /> Dashboard
                     </Link>
                     <Link
                       href="/dashboard/profile"
+                      onClick={closeMenus}
                       className="flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm font-medium text-ink-700 hover:bg-ink-50"
                     >
                       <UserCog className="size-4" /> Update Profile
@@ -162,6 +165,7 @@ export function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
+                onClick={closeMenus}
                 className={`rounded-xl px-3 py-2.5 text-sm font-medium ${
                   isActive(pathname, link.href)
                     ? "bg-ink-900 text-white"
@@ -184,12 +188,14 @@ export function Navbar() {
                   </div>
                   <Link
                     href={dashboardFor(user.role)}
+                    onClick={closeMenus}
                     className="rounded-xl px-3 py-2.5 text-sm font-medium text-ink-700 hover:bg-ink-50"
                   >
                     Dashboard
                   </Link>
                   <Link
                     href="/dashboard/profile"
+                    onClick={closeMenus}
                     className="rounded-xl px-3 py-2.5 text-sm font-medium text-ink-700 hover:bg-ink-50"
                   >
                     Update Profile
@@ -204,10 +210,10 @@ export function Navbar() {
                 </div>
               ) : (
                 <div className="flex flex-col gap-2 px-1">
-                  <Link href="/sign-in" className="btn-outline w-full">
+                  <Link href="/sign-in" onClick={closeMenus} className="btn-outline w-full">
                     Sign In
                   </Link>
-                  <Link href="/sign-up" className="btn-primary w-full">
+                  <Link href="/sign-up" onClick={closeMenus} className="btn-primary w-full">
                     Sign Up
                   </Link>
                 </div>

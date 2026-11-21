@@ -79,10 +79,6 @@ export function DashboardShell({ children }: { children: ReactNode }) {
     }
   }, [loading, user, pathname, router]);
 
-  useEffect(() => {
-    setSidebarOpen(false);
-  }, [pathname]);
-
   if (loading || !user) {
     return <PageLoader label="Checking your session…" />;
   }
@@ -121,6 +117,7 @@ export function DashboardShell({ children }: { children: ReactNode }) {
             <Link
               key={item.href}
               href={item.href}
+              onClick={() => setSidebarOpen(false)}
               className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors ${
                 active
                   ? "bg-brand-500 text-white"
@@ -138,6 +135,7 @@ export function DashboardShell({ children }: { children: ReactNode }) {
         </p>
         <Link
           href="/dashboard/profile"
+          onClick={() => setSidebarOpen(false)}
           className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors ${
             pathname === "/dashboard/profile"
               ? "bg-brand-500 text-white"

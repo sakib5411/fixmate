@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Search, SlidersHorizontal, X } from "lucide-react";
 import { CATEGORY_NAMES, SERVICE_MODES } from "@/lib/constants";
 
@@ -15,10 +15,14 @@ export function ServiceFilters({ total }: { total: number }) {
   const sort = params.get("sort") ?? "newest";
 
   const [search, setSearch] = useState(currentSearch);
+  const [syncedSearch, setSyncedSearch] = useState(currentSearch);
 
-  useEffect(() => {
+  // Keep the input in sync when the URL changes (back/forward or a shared link)
+  // without an extra effect render pass.
+  if (syncedSearch !== currentSearch) {
+    setSyncedSearch(currentSearch);
     setSearch(currentSearch);
-  }, [currentSearch]);
+  }
 
   function apply(next: Record<string, string>) {
     const query = new URLSearchParams(params.toString());

@@ -21,16 +21,14 @@ function Verification() {
   const params = useSearchParams();
   const sessionId = params.get("session_id");
 
-  const [state, setState] = useState<"loading" | "done" | "error">("loading");
-  const [message, setMessage] = useState("");
+  const [state, setState] = useState<"loading" | "done" | "error">(
+    sessionId ? "loading" : "error"
+  );
+  const [message, setMessage] = useState(sessionId ? "" : "Missing Stripe session id.");
   const [result, setResult] = useState<VerificationResult | null>(null);
 
   useEffect(() => {
-    if (!sessionId) {
-      setState("error");
-      setMessage("Missing Stripe session id.");
-      return;
-    }
+    if (!sessionId) return;
 
     let cancelled = false;
 

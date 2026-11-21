@@ -20,7 +20,6 @@ export function useApi<T, M = unknown>(path: string | null): UseApiResult<T, M> 
 
   const load = useCallback(async () => {
     if (!path) return;
-    setLoading(true);
     try {
       const response = await apiGet<T, M>(path);
       setData(response.data);
@@ -35,9 +34,18 @@ export function useApi<T, M = unknown>(path: string | null): UseApiResult<T, M> 
     }
   }, [path]);
 
-  useEffect(() => {
-    void load();
+  /** Manual refresh used by buttons; shows the loading state immediately. */
+  const reload = useCallback(async () => {
+    setLoading(true);
+    await load();
   }, [load]);
 
-  return { data, meta, loading, error, reload: load };
+  useEffect(() => {
+    // Data fetching belongs in an async task, not in the effect body itself.
+    void (async () => {
+      await load();
+    })();
+  }, [load]);
+
+  return { data, meta, loading, error, reload };
 }
