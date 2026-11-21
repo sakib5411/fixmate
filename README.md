@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # FixMate — Client (Next.js)
 
 FixMate is an on-demand device & home appliance repair service platform. Verified technicians
@@ -134,3 +135,6 @@ src/
 ├── components/              # site chrome, services, dashboard, ui, providers
 └── lib/                     # api client, auth client, types, constants, helpers
 ```
+=======
+# fixmate
+>>>>>>> 8a5611f33ad010eb1b0d07c428af599f4bf38477
