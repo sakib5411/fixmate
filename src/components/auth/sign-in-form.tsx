@@ -20,6 +20,19 @@ export function SignInForm() {
   const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
   const [submitting, setSubmitting] = useState(false);
 
+  /** Only same-origin relative paths are safe post-login destinations. */
+  function safeRedirect(target: string | null, role: Role): string {
+    const fallback = dashboardFor(role);
+    if (!target || !target.startsWith("/") || target.startsWith("//")) return fallback;
+    try {
+      const url = new URL(target, window.location.origin);
+      if (url.origin !== window.location.origin) return fallback;
+      return `${url.pathname}${url.search}${url.hash}`;
+    } catch {
+      return fallback;
+    }
+  }
+
   function validate(): boolean {
     const next: { email?: string; password?: string } = {};
     if (!email.trim()) next.email = "Email is required";
@@ -50,7 +63,7 @@ export function SignInForm() {
         "customer") as Role;
 
       toast.success("Welcome back to FixMate");
-      router.replace(redirectTo || dashboardFor(role));
+      router.replace(safeRedirect(redirectTo, role));
       router.refresh();
     } catch {
       toast.error("Could not sign in. Please check that the API is running.");

@@ -1,11 +1,12 @@
 import Link from "next/link";
 import { RotateCcw, XCircle } from "lucide-react";
+import { CustomerGuard } from "@/components/auth/customer-guard";
 import { Navbar } from "@/components/site/navbar";
 import { Footer } from "@/components/site/footer";
 
 export default function PaymentCancelPage() {
   return (
-    <>
+    <CustomerGuard>
       <Navbar />
       <main className="flex-1">
         <div className="container-page flex min-h-[70vh] items-center justify-center py-16">
@@ -32,6 +33,6 @@ export default function PaymentCancelPage() {
         </div>
       </main>
       <Footer />
-    </>
+    </CustomerGuard>
   );
 }

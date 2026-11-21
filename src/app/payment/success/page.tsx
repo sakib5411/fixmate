@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 import { BadgeCheck, CheckCircle2, Loader2, ReceiptText, XCircle } from "lucide-react";
+import { CustomerGuard } from "@/components/auth/customer-guard";
 import { Navbar } from "@/components/site/navbar";
 import { Footer } from "@/components/site/footer";
 import { ApiError, apiGet } from "@/lib/api";
@@ -137,7 +138,7 @@ function Verification() {
 
 export default function PaymentSuccessPage() {
   return (
-    <>
+    <CustomerGuard>
       <Navbar />
       <main className="flex-1">
         <Suspense
@@ -151,6 +152,6 @@ export default function PaymentSuccessPage() {
         </Suspense>
       </main>
       <Footer />
-    </>
+    </CustomerGuard>
   );
 }

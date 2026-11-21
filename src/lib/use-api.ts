@@ -19,12 +19,20 @@ export function useApi<T, M = unknown>(path: string | null): UseApiResult<T, M> 
   const [error, setError] = useState<string | null>(null);
 
   const load = useCallback(async () => {
-    if (!path) return;
+    // Reset before every fetch so switching a filter shows a loading state
+    // instead of the previous filter's rows (or a stale error message).
+    setLoading(true);
+    setError(null);
+    if (!path) {
+      setData(null);
+      setMeta(null);
+      setLoading(false);
+      return;
+    }
     try {
       const response = await apiGet<T, M>(path);
       setData(response.data);
       setMeta(response.meta ?? null);
-      setError(null);
     } catch (requestError) {
       setError(
         requestError instanceof ApiError ? requestError.message : "Could not load this data"
@@ -36,7 +44,6 @@ export function useApi<T, M = unknown>(path: string | null): UseApiResult<T, M> 
 
   /** Manual refresh used by buttons; shows the loading state immediately. */
   const reload = useCallback(async () => {
-    setLoading(true);
     await load();
   }, [load]);
 

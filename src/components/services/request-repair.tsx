@@ -71,8 +71,16 @@ export function RequestRepair({ serviceId, serviceTitle, technicianName }: Reque
 
     if (phone.trim().length < 6) return toast.error("Please enter a valid phone number");
     if (address.trim().length < 5) return toast.error("Please enter your full address");
+    if (!preferredDate || preferredDate < todayInputValue())
+      return toast.error("Choose today or a future date");
     if (problem.trim().length < 20)
       return toast.error("Describe the problem in at least 20 characters");
+
+    // Send a full timestamp. A bare `YYYY-MM-DD` is parsed as UTC midnight by the
+    // API, which gets rejected as "in the past" on servers west of UTC. UTC noon
+    // keeps the chosen calendar date valid in every server timezone.
+    const [year, month, day] = preferredDate.split("-").map(Number);
+    const preferredAt = new Date(Date.UTC(year, month - 1, day, 12)).toISOString();
 
     setSubmitting(true);
     try {
@@ -80,7 +88,7 @@ export function RequestRepair({ serviceId, serviceTitle, technicianName }: Reque
         serviceId,
         customerPhone: phone.trim(),
         address: address.trim(),
-        preferredDate,
+        preferredDate: preferredAt,
         problemDescription: problem.trim(),
       });
       setCreatedId(response.data.id);
