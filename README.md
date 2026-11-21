@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # FixMate — Client (Next.js)
 
 FixMate is an on-demand device & home appliance repair service platform. Verified technicians
@@ -13,8 +12,8 @@ This repository is the **client** (Next.js App Router). The REST API lives in th
 | | URL |
 |---|---|
 | Live site | _add your Vercel deployment URL here_ |
-| Server repository | _add your GitHub link here_ |
-| Client repository | _add your GitHub link here_ |
+| Server repository | _create `fixmate-server` repo and add its URL here_ |
+| Client repository | https://github.com/sakib5411/fixmate |
 
 ## Test accounts
 
@@ -135,6 +134,3 @@ src/
 ├── components/              # site chrome, services, dashboard, ui, providers
 └── lib/                     # api client, auth client, types, constants, helpers
 ```
-=======
-# fixmate
->>>>>>> 8a5611f33ad010eb1b0d07c428af599f4bf38477
