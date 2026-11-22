@@ -11,7 +11,8 @@ This repository is the **client** (Next.js App Router). The REST API lives in th
 
 | | URL |
 |---|---|
-| Live site |https://fixmate-sandy.vercel.app|
+| Live client site |https://fixmate-sandy.vercel.app|
+| Live server site |https://fixmate-server-twq6.vercel.app|
 | Server repository | https://github.com/sakib5411/fixmate-server|
 | Client repository | https://github.com/sakib5411/fixmate |
 
